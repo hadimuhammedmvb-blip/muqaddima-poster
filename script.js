@@ -7,10 +7,9 @@ const outputImage = document.getElementById('outputImage');
 
 generateBtn.addEventListener('click', async () => {
     const userImgFile = document.getElementById('userImg').files[0];
-    const userName = document.getElementById('userName').value;
+    const userName = document.getElementById('userName').value.trim();
 
     const bgImage = new Image();
-    // നിങ്ങളുടെ ഫോൾഡറിലുള്ള പശ്ചാത്തല ചിത്രത്തിന്റെ പേര്
     bgImage.src = 'background.png'; 
 
     generateBtn.innerText = "തയാറാകുന്നു...";
@@ -20,32 +19,54 @@ generateBtn.addEventListener('click', async () => {
         canvas.width = bgImage.naturalWidth;
         canvas.height = bgImage.naturalHeight;
 
-        // 1. പശ്ചാത്തല ചിത്രം വരയ്ക്കുന്നു
+        // 1. পচ্ছাতলം വരയ്ക്കുന്നു
         ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
 
-        // 2. ആളുടെ ഫോട്ടോ വെള്ള ബോക്സിലേക്ക് കട്ട് ചെയ്ത് ചേർക്കുന്നു
+        // ഫോട്ടോ വരയ്ക്കുന്ന ഭാഗം
         if (userImgFile) {
             const img = await loadImage(userImgFile);
             
             ctx.save();
             ctx.beginPath();
-            // വെള്ള ബോക്സിന്റെ അളവുകൾ (X: 198, Y: 562, Width: 156, Height: 212)
-            ctx.roundRect(198, 562, 156, 212, [60, 60, 0, 0]); 
+            
+            let pX = canvas.width * 0.23;    
+            let pY = canvas.height * 0.505;
+            let pW = canvas.width * 0.115;
+            let pH = canvas.height * 0.175;
+            let radius = pW / 2; 
+
+            ctx.moveTo(pX, pY + pH);
+            ctx.lineTo(pX, pY + radius);
+            ctx.arcTo(pX, pY, pX + radius, pY, radius);
+            ctx.arcTo(pX + pW, pY, pX + pW, pY + radius, radius);
+            ctx.lineTo(pX + pW, pY + pH);
+            ctx.closePath();
             ctx.clip(); 
 
-            ctx.drawImage(img, 198, 562, 156, 212); 
+            ctx.drawImage(img, pX, pY, pW, pH); 
             ctx.restore();
         }
 
-        // 3. പേര് ചേർക്കുന്നു
+        // 2. പേര് ചേർക്കുന്ന ഭാഗം (മഞ്ഞ വരയ്ക്കുള്ളിൽ ഒതുക്കുന്നു)
         if (userName) {
-            ctx.font = 'bold 30px Arial'; 
+            let textX = canvas.width * 0.58; 
+            let textY = canvas.height * 0.735; 
+            let maxWidth = canvas.width * 0.32; // മഞ്ഞ വരയുടെ പരമാവധി വീതി
+            
+            let fontSize = 42; // സാധാരണ വലിപ്പം
+            ctx.font = bold ${fontSize}px Arial;
+            
+            // പേരിന്റെ നീളം മഞ്ഞ വരയേക്കാൾ കൂടുതലാണെങ്കിൽ വലിപ്പം കുറയ്ക്കുന്നു
+            while (ctx.measureText(userName).width > maxWidth && fontSize > 20) {
+                fontSize -= 2; // 2 പോയിന്റ് വീതം കുറയ്ക്കുന്നു
+                ctx.font = bold ${fontSize}px Arial;
+            }
+            
             ctx.fillStyle = '#4a2c11'; 
             ctx.textAlign = 'center'; 
-            ctx.fillText(userName, 605, 700); 
+            ctx.fillText(userName, textX, textY); 
         }
 
-        // ഫൈനൽ ഔട്ട്പുട്ട് ഇമേജ് സെറ്റ് ചെയ്യുന്നു
         outputImage.src = canvas.toDataURL('image/png');
         downloadBtn.style.display = 'inline-block';
         
@@ -54,7 +75,7 @@ generateBtn.addEventListener('click', async () => {
     };
 
     bgImage.onerror = () => {
-        alert("background.png ഫോൾഡറിൽ കണ്ടെത്താൻ കഴിഞ്ഞില്ല! ഫയൽ ഉണ്ടെന്ന് ഉറപ്പാക്കുക.");
+        alert("background.png കണ്ടെത്താൻ കഴിഞ്ഞില്ല!");
         generateBtn.innerText = "CREATE POSTER";
         generateBtn.disabled = false;
     };
