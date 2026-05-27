@@ -1,0 +1,119 @@
+/* മൊത്തത്തിലുള്ള ഡിസൈൻ സെറ്റിങ്സ് */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4ece1; /* പോസ്റ്ററിന് ഇണങ്ങുന്ന നേർത്ത കളർ */
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* പ്രധാന ബോക്സ് (Container) */
+.container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* തലക്കെട്ട് (Heading) */
+h2 {
+    color: #d35400; /* ഓറഞ്ച്/ബ്രൗൺ ഷേഡ് */
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+/* ഇൻപുട്ട് ബോക്സുകളുടെ സ്റ്റൈൽ */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+input[type="text"], 
+input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #e67e22;
+    outline: none;
+}
+
+/* ബട്ടണുകളുടെ സ്റ്റൈൽ */
+button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.1s;
+}
+
+/* 'Create Poster' ബട്ടൺ */
+#generateBtn {
+    background-color: #e67e22;
+    color: white;
+}
+
+#generateBtn:hover {
+    background-color: #d35400;
+}
+
+#generateBtn:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+/* 'Download' ബട്ടൺ */
+#downloadBtn {
+    background-color: #27ae60;
+    color: white;
+    margin-top: 15px;
+}
+
+#downloadBtn:hover {
+    background-color: #219a52;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #e0e0e0;
+    margin: 25px 0;
+}
+
+/* പോസ്റ്റർ കാണിക്കുന്ന ഭാഗം */
+.preview-area {
+    margin-top: 20px;
+}
+
+/* പോസ്റ്റർ ഇമേജ് ഫോണിലും കമ്പ്യൂട്ടറിലും കറക്റ്റ് ആയി വരാൻ */
+.responsive-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: block;
+    margin: 0 auto;
+}
