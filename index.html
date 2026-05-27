@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muqaddima Poster Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Muqaddima Poster Generator</h2>
+        
+        <div class="form-group">
+            <label>പേര് (Name):</label>
+            <input type="text" id="userName" placeholder="ആളുടെ പേര് ടൈപ്പ് ചെയ്യുക">
+        </div>
+
+        <div class="form-group">
+            <label>ഫോട്ടോ (Photo):</label>
+            <input type="file" id="userImg" accept="image/*">
+        </div>
+
+        <button id="generateBtn">CREATE POSTER</button>
+
+        <hr>
+
+        <div class="preview-area">
+            <canvas id="posterCanvas" style="display:none;"></canvas>
+            <img id="outputImage" src="" alt="നിങ്ങളുടെ പോസ്റ്റർ ഇവിടെ കാണാം" class="responsive-img">
+            <br>
+            <button id="downloadBtn" style="display:none;">DOWNLOAD POSTER</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
