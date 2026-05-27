@@ -10,6 +10,8 @@ generateBtn.addEventListener('click', async () => {
     const userName = document.getElementById('userName').value.trim();
 
     const bgImage = new Image();
+    // Vercel/GitHub ഹോസ്റ്റിംഗിൽ ചിത്രങ്ങൾ കൃത്യമായി കിട്ടാൻ crossOrigin ചേർക്കുന്നു
+    bgImage.crossOrigin = 'anonymous'; 
     bgImage.src = 'background.png'; 
 
     generateBtn.innerText = "തയാറാകുന്നു...";
@@ -19,7 +21,7 @@ generateBtn.addEventListener('click', async () => {
         canvas.width = bgImage.naturalWidth;
         canvas.height = bgImage.naturalHeight;
 
-        // 1. পচ্ছাতলം വരയ്ക്കുന്നു
+        // 1. പശ്ചാത്തലം വരയ്ക്കുന്നു
         ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
 
         // ഫോട്ടോ വരയ്ക്കുന്ന ഭാഗം
@@ -47,19 +49,18 @@ generateBtn.addEventListener('click', async () => {
             ctx.restore();
         }
 
-        // 2. പേര് ചേർക്കുന്ന ഭാഗം (മഞ്ഞ വരയ്ക്കുള്ളിൽ ഒതുക്കുന്നു)
+        // 2. പേര് ചേർക്കുന്ന ഭാഗം
         if (userName) {
             let textX = canvas.width * 0.58; 
             let textY = canvas.height * 0.735; 
-            let maxWidth = canvas.width * 0.32; // മഞ്ഞ വരയുടെ പരമാവധി വീതി
+            let maxWidth = canvas.width * 0.32; 
             
-            let fontSize = 42; // സാധാരണ വലിപ്പം
-            ctx.font = bold ${fontSize}px Arial;
+            let fontSize = 42; 
+            ctx.font = `bold ${fontSize}px Arial`; // ഇവിടെ തിരുത്തിയിട്ടുണ്ട്
             
-            // പേരിന്റെ നീളം മഞ്ഞ വരയേക്കാൾ കൂടുതലാണെങ്കിൽ വലിപ്പം കുറയ്ക്കുന്നു
             while (ctx.measureText(userName).width > maxWidth && fontSize > 20) {
-                fontSize -= 2; // 2 പോയിന്റ് വീതം കുറയ്ക്കുന്നു
-                ctx.font = bold ${fontSize}px Arial;
+                fontSize -= 2; 
+                ctx.font = `bold ${fontSize}px Arial`; // ഇവിടെയും തിรวจി
             }
             
             ctx.fillStyle = '#4a2c11'; 
@@ -75,7 +76,7 @@ generateBtn.addEventListener('click', async () => {
     };
 
     bgImage.onerror = () => {
-        alert("background.png കണ്ടെത്താൻ കഴിഞ്ഞില്ല!");
+        alert("background.png കണ്ടെത്താൻ കഴിഞ്ഞില്ല! ഫയലിന്റെ പേര് background.png എന്ന് തന്നെയാണെന്ന് ഉറപ്പാക്കുക.");
         generateBtn.innerText = "CREATE POSTER";
         generateBtn.disabled = false;
     };
@@ -96,6 +97,6 @@ function loadImage(file) {
 downloadBtn.addEventListener('click', () => {
     const link = document.createElement('a');
     link.download = 'muqaddima-poster.png';
-    link.href = canvas.toDataURL();
+    link.href = canvas.toDataURL('image/png');
     link.click();
 });
